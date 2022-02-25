@@ -1,0 +1,191 @@
+#include<iostream>
+#include<string>
+#include<stdlib.h>
+using namespace std;
+
+void welcome(string playerName, int playerHit, int playerHealth, int playerLevel, int playerCoins, int fruit);
+int attack(int playerHit, int playerHealth, int playerLevel, int enemieHit, int enemieHealth, int count);
+void appleScene(int fruit, int playerHealth);
+void playerStats(string playerName, int playerHit, int playerHealth, int playerLevel, int playerCoins, int fruit);
+void questOne(int playerHit, int playerHealth, int playerLevel, int enemieHit, int enemieHealth, int count);
+
+int main()
+{
+    int playerHit = 10;
+    int playerHealth = 100;
+    int playerLevel = 1;
+    int playerCoins = 0;
+    int fruit = 0;
+    char answer{};
+    int count = 0;
+    string playerName;
+
+    int enemieHit = 5;
+    int enemieHealth = 50;
+
+   welcome(playerName, playerHit, playerHealth, playerLevel, playerCoins, fruit);
+
+    cout << "You encounter a level 1 enemie, would you like to battle?(Y/N) Please note that not battling this enemie might hurt you in future battles.\n";
+    cin >> answer;
+    if(toupper(answer) == 'Y')
+    {
+        system("CLS");
+        cout << "Congrats!! You have the first hit.\n\n";
+        playerLevel = attack(playerHit, playerHealth, playerLevel, enemieHit, enemieHealth, count);
+    }
+    else if(toupper(answer) == 'N')
+    {
+        system("CLS");
+        cout << "You continue to walk...\n\n" << endl;
+    }
+    else
+    {
+         system("CLS");
+         cout << "Please stick to the script -_-\n\n" << endl;
+    }
+
+    system("CLS");
+    cout << "Would you like to see your player stats? (Y/N)";
+    cin >> answer;
+    if (answer == 'Y')
+    {
+        playerStats(playerName, playerHit, playerHealth, playerLevel, playerCoins, fruit);
+    }
+    else
+    {
+        "Let's continue walking... There is a sign on the trail you are on. It reads \n\n \"Balto City is 3 miles ahead\" ";
+    }
+
+    appleScene (fruit, playerHealth);
+
+    system("CLS");
+    cout << "You continue to walk and walk and walk all through the forest and on the trail...";
+    return 0;
+    system("CLS");
+
+    questOne(playerHit, playerHealth, playerLevel, enemieHit, enemieHealth, count);
+
+    return 0;
+}
+void welcome(string playerName, int playerHit, int playerHealth, int playerLevel, int playerCoins, int fruit)
+{
+    cout << "Hello and welcome to the world of binary!!" << endl
+        << "What is your name?\n";
+    getline(cin, playerName);
+
+    cout << endl << endl << playerName << "!!! Hope you like this name cause I didn't want to code to ask :)" << endl
+        << "Thank you for coming onto this program to help me battle with bugs! I know, super original!!!!!" << endl << endl
+        << "This game is only a text game so don't worry about aiming." << endl << endl
+        << "Here are your player stats to start you out:" << endl
+        << "Health: " << playerHealth << endl
+        << "Attack: " << playerHit << endl
+        << "Level: " << playerLevel << endl
+        << "Coins: " << playerCoins << endl
+        << "Apples: " << fruit << endl << endl;
+
+}
+//The function below is the one that is not going through on the stack
+int attack(int playerHit, int playerHealth, int playerLevel, int enemieHit, int enemieHealth, int count)
+{
+    do
+    {
+        //I originally had the code below like -= but I figured that was the issue (it was not)
+        //I have tried breakpoints and to see if this do while loop was the issue but it is the function all together
+        enemieHealth = playerHit - enemieHealth;
+        playerHealth = enemieHit - playerHealth;
+
+        count++;
+
+    } while (playerHealth >> 0 && enemieHealth >> 0);
+
+    if (playerHealth >> 0 && enemieHealth == 0)
+    {
+        cout << "It took you " << count << "hits to kill the enemie.\n"
+            << "Your final health was " << playerHealth << ".\n\n"
+            << "Since you have killed an enemie you were rewarded 5 coins.";
+    }
+    else if (playerHealth == 0 && enemieHealth >> 0)
+    {
+        cout << "You have died :[" << endl
+            << "How?" << endl;
+    }
+    else
+    {
+        cout << "This is literally an error.\n\n";
+    }
+
+    if (enemieHealth == 0)
+    {
+        return playerLevel++;
+    }
+    else
+    {
+        return playerLevel = 0;
+    }
+}
+void appleScene(int fruit, int playerHealth)
+{
+    int answer;
+
+    cout << "As you continue to walk you find a 2 apples. You can use apples to heal up 35. You don't have to eat them now, you can use these in combat." << endl <<
+        "Would you like to use both, one, or none?" << endl << "Please answer typing 2, 1, or 0: ";
+    cin >> answer;
+    if (answer == 2)
+    {
+        playerHealth = playerHealth + (35 * 2);
+
+        cout << "Your health is now " << playerHealth;
+    }
+    else if (answer == 1)
+    {
+        playerHealth = playerHealth + 35;
+
+        cout << "Your health is now " << playerHealth;
+    }
+    else if (answer == 0)
+    {
+        cout << "You have chosen to keep both apples for a later date.\n";
+    }
+    else
+    {
+        fruit = fruit - 1;
+        
+        cout << "You did not answer as prompted, why.\n"
+            << "Because of this, an apple was taken away." << endl << endl
+            << "Don't do it again or you will continue to be punished.\n\n";
+
+        cout << "Your health is " << playerHealth << ", and you have " << fruit << "apples.\n";
+
+    }
+}
+
+void playerStats(string playerName, int playerHit, int playerHealth, int playerLevel, int playerCoins, int fruit)
+{
+    cout << "Here are " << playerName << "'s stats:" << endl
+        << "Health: " << playerHealth << endl
+        << "Attack: " << playerHit << endl
+        << "Level: " << playerLevel << endl
+        << "Coins: " << playerCoins << endl
+        << "Apples: " << fruit << endl << endl;
+}
+
+void questOne(int playerHit, int playerHealth, int playerLevel, int enemieHit, int enemieHealth, int count)
+{
+    char answer; 
+
+    cout << "Finally, you have arrived to the city. You grab a quick bite and stubble upon an old friend, Jonathan.\n"
+        << "As you both catch up and try to make sense of the world you are living in, he wonders if you could help him with some nasty bugs on the upper east side of the city\n\n"
+        << "He said he would split the rewards with you. Shall you offer your help? (Y/N) ";
+    cin >> answer;
+
+    if (toupper(answer) == 'y')
+    {
+        cout << "You offer your help to Jonathan and he smiles with glee as he says, Well lets start walking";
+        //add quotes to the above text for Jonathan
+    }
+    else if (toupper(answer) == 'n')
+    {
+        cout << "You explain to Jonathan that you have other things to attend to and he understand. He wishes you good luck and you start walking around the city.";
+
+    }
+}
